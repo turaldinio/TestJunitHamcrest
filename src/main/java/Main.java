@@ -1,8 +1,9 @@
-import au.com.bytecode.opencsv.CSVReader;
-import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
-import au.com.bytecode.opencsv.bean.CsvToBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.opencsv.CSVReader;
+import com.opencsv.bean.ColumnPositionMappingStrategy;
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -34,9 +35,11 @@ public class Main {
             strategy.setType(Employee.class);
             strategy.setColumnMapping(columnMapping);
 
-            CsvToBean<Employee> csv = new CsvToBean<>();
+            CsvToBean<Employee> csv = new CsvToBeanBuilder<Employee>(csvReader)
+                    .withMappingStrategy(strategy)
+                    .build();
 
-            list = csv.parse(strategy, csvReader);
+            list = csv.parse();
 
         } catch (IOException e) {
             e.printStackTrace();
