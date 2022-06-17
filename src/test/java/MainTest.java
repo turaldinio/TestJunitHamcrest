@@ -18,7 +18,6 @@ public class MainTest {
     @BeforeEach
     public void listInit() {
         employeeList = new ArrayList<>();
-        8
         employeeList.add(new Employee(1, "John", "Smith", "USA", 25));
         employeeList.add(new Employee(2, "Ivan", "Petrov", "RU", 23));
     }
