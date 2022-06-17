@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+
 public class MainTest {
 
     private List<Employee> employeeList;
@@ -58,6 +61,28 @@ public class MainTest {
         String text = fileReader.nextLine();
         Assertions.assertEquals(json, text);
 
+    }
+
+    @Test
+    public void listSize() {
+        assertThat(employeeList, hasSize(2));
+    }
+
+    @Test
+    public void checkJoinText() throws FileNotFoundException {
+        String json = "[{\"id\":1,\"firstName\":\"John\",\"lastName\":\"Smith\",\"country\":\"USA\",\"age\":25}," +
+                "{\"id\":2,\"firstName\":\"Ivan\",\"lastName\":\"Petrov\",\"country\":\"RU\",\"age\":23}]";
+
+        Main.writeString("data.json", json);
+
+
+        Assertions.assertTrue(Files.exists(Paths.get("data.json")));
+
+        Scanner fileReader = new Scanner(new FileReader("data.json"));
+
+        String text = fileReader.nextLine();
+
+        assertThat(text, equalToIgnoringCase(json));
     }
 
 
